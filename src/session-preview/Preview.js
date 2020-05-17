@@ -11,7 +11,8 @@ class Preview extends React.Component {
         return (
             <div>
                 <p>Session name: {this.session.name}</p>
-                <p>Players: <ul>{this.getPlayers()}</ul></p>
+                <p>Players: </p>
+                <ul>{this.getPlayers()}</ul>
             </div>
         );
     }
@@ -19,7 +20,7 @@ class Preview extends React.Component {
     getPlayers() {
         return (
             this.session.players.map((player) =>
-                <li>{player}</li>
+                <li key={player}>{player}</li>
             )
         );
     }
