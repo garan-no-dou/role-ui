@@ -1,9 +1,10 @@
 import * as React from "react";
 import Preview from "../session-preview/Preview";
+import SessionService from "../service/SessionService";
 
 /*
-* TODO: Implement filter sessions with state
-* TODO: https://reactjs.org/docs/lifting-state-up.html
+* DONE: Implement filter sessions with state
+* DONE: https://reactjs.org/docs/lifting-state-up.html
 * */
 
 class Dashboard extends React.Component {
@@ -14,31 +15,27 @@ class Dashboard extends React.Component {
             sessions: []
         }
 
-		this.handleChange = this.handleChange.bind(this);   
-		this.handleSubmit= this.handleSubmit.bind(this);   
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.sessionService = new SessionService();
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        const sessions = await this.fetchSessions();
         this.setState({
-            sessions: this.fetchSessions()
+            sessions: sessions
         })
     }
 
-    fetchSessions() {
-        // TODO: Axios API call
-        const sessionA = {
-            name: "Session A",
-            players: ["Loyel", "Mañel"]
+    async fetchSessions() {
+        let sessions = [];
+        if (this.state.filterText.length > 0) {
+            const response = await this.sessionService.getSessionsByName(this.state.filterText)
+            sessions = response.data;
+        } else {
+            const response = await this.sessionService.getSessions()
+            sessions = response.data;
         }
-        const sessionB = {
-            name: "Session B",
-            players: ["Selgio", "Mañel"]
-        }
-        const sessions= [sessionA, sessionB]
-        
-        if(this.state.filterText.length > 0){
-			return sessions.filter(session => session.name === this.state.filterText)
-        } 
         return sessions;
     }
 
@@ -47,18 +44,18 @@ class Dashboard extends React.Component {
             <div>
                 <aside>
                     <form onSubmit={this.handleSubmit}>
-						<input type="text" value={this.state.value} onChange={this.handleChange} />
-						<p>{this.state.filterText}</p>
-						<input type="submit" value="Search"></input>
+                        <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                        <p>{this.state.filterText}</p>
+                        <input type="submit" value="Search"></input>
                     </form>
                 </aside>
                 <section>
-					<ul> {this.renderSessionItems()} </ul>
+                    <ul> {this.renderSessionItems()} </ul>
                 </section>
             </div>
-            
+
         );
-        
+
     }
 
     renderSessionItems() {
@@ -69,16 +66,16 @@ class Dashboard extends React.Component {
         );
     }
 
-	handleChange(event) {
+    handleChange(event) {
         this.setState({
-          filterText: event.target.value
-		});
-    }   
+            filterText: event.target.value
+        });
+    }
 
-   handleSubmit(event) {
-    this.setState({sessions: this.fetchSessions()})
-    event.preventDefault();
-  }   
+    handleSubmit(event) {
+        this.fetchSessions()
+        event.preventDefault();
+    }
 }
 
 export default Dashboard;
