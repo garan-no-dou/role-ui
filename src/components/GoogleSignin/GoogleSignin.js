@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Signin.module.css';
+import styles from './GoogleSignin.module.css';
+import GoogleAuthenticationDTO from "./GoogleAuthenticationDTO";
 
-class Signin extends React.Component {
+class GoogleSignin extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,7 +18,8 @@ class Signin extends React.Component {
 
     onSignIn(googleUser) {
         // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
+        let profile = googleUser.getBasicProfile();
+
         console.log("ID: " + profile.getId()); // Don't send this directly to your server!
         console.log('Full Name: ' + profile.getName());
         console.log('Given Name: ' + profile.getGivenName());
@@ -27,10 +28,20 @@ class Signin extends React.Component {
         console.log("Email: " + profile.getEmail());
 
         // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
+        let authResponse = googleUser.getAuthResponse;
+        var id_token = authResponse().id_token;
         console.log("ID Token: " + id_token);
+
+        let googleAuthentication = new GoogleAuthenticationDTO(
+            authResponse.access_token,
+            authResponse.id_token,
+            authResponse.scope,
+            authResponse.expires_in,
+            authResponse.first_issued_at,
+            authResponse.expires_at
+        )
     }
 }
 
 
-export default Signin;
+export default GoogleSignin;
