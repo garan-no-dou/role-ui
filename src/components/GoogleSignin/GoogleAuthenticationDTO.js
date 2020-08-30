@@ -1,17 +1,16 @@
 class GoogleAuthenticationDTO {
     googleBasicProfile;
-    googleAuthResponse;
+    googleAuth;
 
-    constructor(googleBasicProfile, googleAuthResponse) {
+    constructor(googleBasicProfile, googleAuth) {
         this.googleBasicProfile = googleBasicProfile;
-        this.googleAuthResponse = googleAuthResponse;
+        this.googleAuth = googleAuth;
     }
 
 }
 
 class GoogleAuthenticationBuilder {
 
-    id;
     name;
     givenName;
     familyName;
@@ -25,31 +24,27 @@ class GoogleAuthenticationBuilder {
     firstIssuedAt;
     expiresAt;
 
-
-    constructor() {
-    }
-
     build() {
-        let googleBasicProfile = new GoogleBasicProfile(this.id,
+        let googleBasicProfile = new GoogleBasicProfile(
             this.name,
             this.givenName,
             this.familyName,
             this.imageUrl,
             this.email)
 
-        let googleAuthResponse = new GoogleAuthResponse(this.accessToken,
+        let googleAuth = new GoogleAuth(
+            this.accessToken,
             this.idToken,
             this.scope,
             this.expiresIn,
             this.firstIssuedAt,
             this.expiresAt)
 
-        return new GoogleAuthenticationDTO(googleBasicProfile, googleAuthResponse)
+        return new GoogleAuthenticationDTO(googleBasicProfile, googleAuth)
     }
 }
 
 class GoogleBasicProfile {
-    id;
     name;
     givenName;
     familyName;
@@ -57,7 +52,6 @@ class GoogleBasicProfile {
     email;
 
     constructor(id, name, givenName, familyName, imageUrl, email) {
-        this.id = id;
         this.name = name;
         this.givenName = givenName;
         this.familyName = familyName;
@@ -66,7 +60,7 @@ class GoogleBasicProfile {
     }
 }
 
-class GoogleAuthResponse {
+class GoogleAuth {
     accessToken;
     idToken;
     scope;
@@ -84,4 +78,7 @@ class GoogleAuthResponse {
     }
 }
 
-export default GoogleAuthenticationDTO;
+export default {
+    GoogleAuthenticationDTO, GoogleAuthenticationBuilder
+}
+
