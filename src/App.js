@@ -4,9 +4,9 @@ import './App.css';
 import GoogleSignin from "./components/GoogleSignin/GoogleSignin";
 
 function App() {
-  return (
-      <GoogleSignin/>
-  );
+    return (
+        <GoogleSignin/>
+    );
 }
 
 export default App;
