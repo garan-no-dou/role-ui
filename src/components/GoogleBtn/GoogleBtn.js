@@ -32,8 +32,8 @@ class GoogleBtn extends Component {
                 isLogined: true,
                 accessToken: response.accessToken
             }));
+            this.googleAuthenticatorService.authenticate(response)
         }
-        this.googleAuthenticatorService.createSession(response)
     }
 
     logout (response) {

@@ -7,11 +7,11 @@ class GoogleAuthenticationService {
     constructor() {
     }
 
-    createSession(response) {
+    authenticate(googleLoginResponse) {
 
         let googleAuthenticationBuilder = new GoogleAuthenticationDTO.GoogleAuthenticationBuilder()
 
-        let profileObj = response.profileObj;
+        let profileObj = googleLoginResponse.profileObj;
 
         googleAuthenticationBuilder.name = profileObj.name
         googleAuthenticationBuilder.givenName = profileObj.givenName
@@ -19,7 +19,7 @@ class GoogleAuthenticationService {
         googleAuthenticationBuilder.imageUrl = profileObj.imageUrl
         googleAuthenticationBuilder.email = profileObj.email
 
-        let tokenObj = response.tokenObj
+        let tokenObj = googleLoginResponse.tokenObj
 
         googleAuthenticationBuilder.accessToken = tokenObj.access_token
         googleAuthenticationBuilder.idToken = tokenObj.id_token
@@ -46,9 +46,6 @@ class GoogleAuthenticationService {
         })
     }
 
-    deleteSession(response) {
-        //TODO:
-    }
 }
 
 export default GoogleAuthenticationService;
