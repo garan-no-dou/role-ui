@@ -1,16 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import GoogleAuthenticationDTO from "./GoogleAuthenticationDTO";
+import SessionService from "../../service/SessionService";
 
 class GoogleAuthenticationService {
 
+    sessionService: SessionService;
+
     constructor() {
+        this.sessionService = new SessionService();
     }
 
     authenticate(googleLoginResponse) {
-
         let googleAuthenticationBuilder = new GoogleAuthenticationDTO.GoogleAuthenticationBuilder()
-
         let profileObj = googleLoginResponse.profileObj;
 
         googleAuthenticationBuilder.name = profileObj.name
@@ -38,9 +40,9 @@ class GoogleAuthenticationService {
                 }
             })
             .then(res => {
-                console.log(res);
-                console.log(res.data);
-                //TODO: Store user session into indexedDB
+                let sessionId = res.data;
+                this.sessionService.saveSessionId(sessionId);
+
             }).catch(reason => {
             //TODO: Do something when it fails
         })
