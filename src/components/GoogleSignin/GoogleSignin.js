@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './GoogleSignin.module.css';
-import GoogleAuthenticationDTO from "./GoogleAuthenticationDTO";
 import {MDBBtn, MDBCol, MDBContainer, MDBInput, MDBJumbotron, MDBRow} from "mdbreact";
 import GoogleBtn from "../GoogleBtn/GoogleBtn";
+import GoogleAuthenticationService from "./GoogleAuthenticationService";
 
 class GoogleSignin extends React.Component {
 
@@ -26,7 +26,7 @@ class GoogleSignin extends React.Component {
                                                 <MDBInput label="Type your email" icon="envelope" group type="email"
                                                           validate
                                                           error="wrong"
-                                                          success="right" />
+                                                          success="right"/>
                                                 <MDBInput label="Type your password" icon="lock" group type="password"
                                                           validate/>
                                             </div>
@@ -41,7 +41,7 @@ class GoogleSignin extends React.Component {
                                     </MDBRow>
                                     <MDBRow>
                                         <MDBCol>
-                                            <GoogleBtn />
+                                            <GoogleBtn/>
                                         </MDBCol>
                                     </MDBRow>
                                 </form>
