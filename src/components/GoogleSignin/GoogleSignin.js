@@ -12,7 +12,7 @@ class GoogleSignin extends React.Component {
 
     render() {
         return (
-            <div className={styles.Signin} data-testid="Signin">
+            <div className={styles.Signin} data-testid="GoogleSignin">
                 <MDBContainer>
                     <MDBJumbotron className="m-5">
                         <MDBRow>
