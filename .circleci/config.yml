@@ -10,13 +10,13 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: role-ui-cache-{{ checksum "package.json" }}
+          key: role-ui-cache-{{ checksum "package-lock.json" }}
 
       - run: npm install
 
       - save_cache:
           paths:
-            - ~/.npm
-          key: role-ui-cache-{{ checksum "package.json" }}
+            - node_modules
+          key: role-ui-cache-{{ checksum "package-lock.json" }}
 
       - run: npm run test
